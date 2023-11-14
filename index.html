@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #000, #4b0082); /* Black to Dark Purple gradient */
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-image: url('background.jpg');
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        .features {
+            background-color: #111;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
+        }
+
+        .feature {
+            flex-basis: calc(45% - 20px);
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        .feature h2 {
+            font-size: 1.5rem;
+        }
+
+        .feature p {
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        /* Add Font Awesome icons to each feature */
+        .feature i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            max-width: 150px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 20px rgba(128, 0, 128, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(128, 0, 128, 1);
+            }
+        }
+
+        .counters {
+            background-color: #333; /* Dark gray background */
+            padding: 40px;
+        }
+
+        .counter {
+            display: inline-block;
+            margin: 20px;
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .counter i {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .header {
+                background-size: contain;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="glowing-logo.png" alt="Fadesucator Bot Logo" class="logo">
+    <h1>Welcome to Fadesucator Bot!</h1>
+    <p>Your Ultimate Obfuscator Bot</p>
+    <a class="btn" href="" target="_blank">Join Discord Server</a>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <i class="fas fa-shield"></i> <!-- Font Awesome shield icon -->
+        <h2>Highly Secured</h2>
+        <p>Our bot is equipped with state-of-the-art security measures to protect your data and scripts.</p>
+    </div>
+    <div class="feature">
+        <i class="fas fa-lock"></i> <!-- Font Awesome lock icon -->
+        <h2>Anti Tamper</h2>
+        <p>Protect your scripts against tampering with our advanced anti-tamper mechanisms.</p>
+    </div>
+    <div class="feature">
+        <i class="fas fa-bell"></i> <!-- Font Awesome bell icon -->
+        <h2>Security Webhooks (SOON)</h2>
+        <p>Stay updated with real-time security alerts through secure webhooks (coming soon).</p>
+    </div>
+    <div class="feature">
+        <i class="fas fa-file-alt"></i> <!-- Font Awesome file-alt icon -->
+        <h2>Execution Logs (SOON)</h2>
+        <p>Get detailed execution logs for your scripts (coming soon).</p>
+    </div>
+</div>
+
+<div class="counters">
+    <div class="counter">
+        <i class="fas fa-users"></i> <!-- Font Awesome users icon -->
+        <span>Users</span>
+        <br>
+        <span id="userCount">6</span> <!-- Initialize with 0 -->
+    </div>
+    <div class="counter">
+        <i class="fas fa-file-code"></i> <!-- Font Awesome code icon -->
+        <span>Secured Scripts</span>
+        <br>
+        <span id="scriptCount">52</span> <!-- Initialize with 0 -->
+    </div>
+</div>
+
+<script>
+    // Function to count up when elements are in the viewport
+    function countUp(element, target) {
+        let current = 0;
+        const step = Math.ceil(target / 100);
+        const interval = setInterval(function () {
+            current += step;
+            if (current >= target) {
+                clearInterval(interval);
+                current = target;
+            }
+            element.textContent = current;
+        }, 20);
+    }
+
+    const userCounter = document.getElementById("userCount");
+    const scriptCounter = document.getElementById("scriptCount");
+
+    const counters = [userCounter, scriptCounter];
+
+    // Create an Intersection Observer to trigger counting when elements are in the viewport
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                counters.forEach((counter) => {
+                    const target = parseInt(counter.textContent);
+                    countUp(counter, target);
+                });
+            }
+        });
+    }, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    });
+
+    // Observe the counters when they come into view
+    counters.forEach((counter) => {
+        observer.observe(counter);
+    });
+</script>
+
+</body>
+</html>
